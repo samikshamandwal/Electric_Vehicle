@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="EV Insights — High-performance Electric Vehicle Market Intelligence platform integrating interactive Tableau Public dashboards and data stories.">
+  <meta name="keywords" content="EV, Electric Vehicles, Automotive Analytics, Tableau Public, Market Intelligence, EV Sales, Clean Energy">
+  <meta name="author" content="Samiksha Mandwal">
+  
+  <title>EV Insights — Electric Vehicle Market Intelligence</title>
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23FFB000'><path d='M13 2L3 14h9l-1 8 10-12h-9l1-8z'/></svg>">
+
+  <!-- Google Fonts: Outfit (Headings) & Inter (Body) & JetBrains Mono (Telemetry) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Outfit:wght@500;600;700;800;900&display=swap" rel="stylesheet">
+
+  <!-- Font Awesome 6 Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+  <!-- Master Stylesheet -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+
+  <!-- ======================================================================
+       1. Navigation Bar (Sticky with Amber Glow Accents)
+       ====================================================================== -->
+  <header class="navbar" id="siteHeader">
+    <div class="container navbar-container">
+      <!-- Brand Logo -->
+      <a href="#home" class="brand-logo" id="brandLogo" aria-label="EV Insights Home">
+        <div class="logo-icon-wrapper">
+          <i class="fa-solid fa-bolt-lightning"></i>
+        </div>
+        <span>EV <span class="accent">Insights</span></span>
+      </a>
+
+      <!-- Desktop Nav Links -->
+      <nav aria-label="Primary Navigation">
+        <ul class="nav-menu" id="navMenu">
+          <li><a href="#home" class="nav-link active" id="navHome">Home</a></li>
+          <li><a href="#about" class="nav-link" id="navAbout">About</a></li>
+          <li><a href="#features" class="nav-link" id="navFeatures">Features</a></li>
+          <li><a href="#stats" class="nav-link" id="navStats">Metrics</a></li>
+          <li><a href="#dashboard" class="nav-link" id="navDashboard">Dashboard</a></li>
+          <li><a href="#story" class="nav-link" id="navStory">Story</a></li>
+          <li><a href="#project" class="nav-link" id="navProject">About Project</a></li>
+        </ul>
+      </nav>
+
+      <!-- Right Action CTA Buttons -->
+      <div class="nav-actions">
+        <a href="#dashboard" class="btn btn-secondary btn-sm" id="navExploreDashboardBtn">
+          <i class="fa-solid fa-chart-line"></i>
+          <span>Explore Dashboard</span>
+        </a>
+        <a href="#story" class="btn btn-primary btn-sm" id="navExploreStoryBtn">
+          <i class="fa-solid fa-book-open"></i>
+          <span>Explore Story</span>
+        </a>
+      </div>
+
+      <!-- Mobile Hamburger Toggle -->
+      <button class="mobile-toggle" id="mobileNavToggle" aria-label="Toggle navigation menu" aria-expanded="false">
+        <i class="fa-solid fa-bars"></i>
+      </button>
+    </div>
+  </header>
+
+  <main>
+    <!-- ====================================================================
+         2. Hero Section
+         ==================================================================== -->
+    <section class="hero-section" id="home">
+      <div class="container">
+        <div class="hero-grid">
+          <!-- Left Hero Content -->
+          <div class="hero-content">
+            <div class="hero-badge">
+              <span class="pulse-dot"></span>
+              <span>Next-Gen Automotive Intelligence</span>
+            </div>
+
+            <h1 class="hero-title">
+              Powering the <span class="gradient-text">Future</span> of Electric Mobility
+            </h1>
+
+            <!-- Animated cycling subtitle -->
+            <div class="animated-subtitle-wrapper" aria-live="polite">
+              <span class="animated-subtitle" id="animatedSubtitle">Discover the EV Revolution</span>
+            </div>
+
+            <p class="hero-description">
+              Explore electric vehicle adoption, manufacturer performance, annual sales trends, 
+              battery technologies, and customer preferences through interactive data visualization 
+              and storytelling.
+            </p>
+
+            <div class="hero-cta-group">
+              <a href="#dashboard" class="btn btn-primary btn-lg" id="heroCtaDashboard">
+                <i class="fa-solid fa-chart-pie"></i>
+                <span>Explore Dashboard</span>
+              </a>
+              <a href="#story" class="btn btn-secondary btn-lg" id="heroCtaStory">
+                <i class="fa-solid fa-compass"></i>
+                <span>Explore Story</span>
+              </a>
+            </div>
+          </div>
+
+          <!-- Right Hero Visual -->
+          <div class="hero-visual">
+            <div class="hero-image-card">
+              <img src="{{ url_for('static', filename='images/ev_hero.jpg') }}" alt="Futuristic Electric Supercar with Amber LED Lighting" loading="eager" width="800" height="480">
+              <div class="hero-image-overlay"></div>
+
+              <!-- Floating Analytics Card -->
+              <div class="hero-floating-card">
+                <div class="floating-card-info">
+                  <div class="floating-icon">
+                    <i class="fa-solid fa-charging-station"></i>
+                  </div>
+                  <div class="floating-text">
+                    <div class="floating-label">Market Adoption Index</div>
+                    <div class="floating-value">+42.6% YoY Growth</div>
+                  </div>
+                </div>
+                <div class="floating-badge">
+                  <i class="fa-solid fa-arrow-trend-up"></i>
+                  <span>Global EV Pace</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Scroll Indicator -->
+      <a href="#about" class="scroll-indicator" aria-label="Scroll down to About section">
+        <div class="scroll-mouse">
+          <div class="scroll-wheel"></div>
+        </div>
+        <span>Scroll to Explore</span>
+      </a>
+    </section>
+
+    <!-- ====================================================================
+         3. About Section
+         ==================================================================== -->
+    <section class="section section-secondary" id="about">
+      <div class="container">
+        <div class="section-header">
+          <div class="section-tag">
+            <i class="fa-solid fa-atom"></i>
+            <span>Overview & Mission</span>
+          </div>
+          <h2>Insights Behind the EV Revolution</h2>
+          <p>
+            The electric vehicle market is transforming the automotive industry. Understanding sales performance, 
+            consumer preferences, manufacturer competition, and battery technology is essential to understanding 
+            this transition. EV Insights brings these insights together through interactive dashboards and 
+            data-driven storytelling.
+          </p>
+        </div>
+
+        <div class="about-grid">
+          <!-- Card 1: Market Growth -->
+          <div class="about-card">
+            <div class="about-card-icon">
+              <i class="fa-solid fa-chart-line"></i>
+            </div>
+            <h3>Market Growth</h3>
+            <p>
+              Explore electric vehicle adoption rates, multi-year sales velocity, and volume surges across global automotive territories.
+            </p>
+          </div>
+
+          <!-- Card 2: Technology Shift -->
+          <div class="about-card">
+            <div class="about-card-icon">
+              <i class="fa-solid fa-car-battery"></i>
+            </div>
+            <h3>Technology Shift</h3>
+            <p>
+              Understand battery chemistry, energy density breakthroughs, range enhancements, and powertrain architectural shifts.
+            </p>
+          </div>
+
+          <!-- Card 3: Consumer Confidence -->
+          <div class="about-card">
+            <div class="about-card-icon">
+              <i class="fa-solid fa-thumbs-up"></i>
+            </div>
+            <h3>Consumer Confidence</h3>
+            <p>
+              Explore customer satisfaction indices, review ratings, charging reliability metrics, and category-level vehicle sentiment.
+            </p>
+          </div>
+
+          <!-- Card 4: Actionable Insights -->
+          <div class="about-card">
+            <div class="about-card-icon">
+              <i class="fa-solid fa-lightbulb"></i>
+            </div>
+            <h3>Actionable Insights</h3>
+            <p>
+              Discover strategic patterns, segment opportunities, and competitive benchmarks that empower data-driven decisions.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ====================================================================
+         4. Features Section
+         ==================================================================== -->
+    <section class="section" id="features">
+      <div class="container">
+        <div class="section-header">
+          <div class="section-tag green">
+            <i class="fa-solid fa-cubes"></i>
+            <span>Capabilities</span>
+          </div>
+          <h2>Explore EV Intelligence</h2>
+          <p>
+            Experience a dual-tier analytics suite designed for automotive analysts, industry enthusiasts, 
+            and strategic decision-makers.
+          </p>
+        </div>
+
+        <div class="features-grid">
+          <!-- Feature 1 -->
+          <div class="feature-box">
+            <div class="feature-top">
+              <div class="feature-icon-header">
+                <div class="feature-icon">
+                  <i class="fa-solid fa-sliders"></i>
+                </div>
+                <span class="feature-index">01 // PLATFORM</span>
+              </div>
+              <h3>Interactive Analytics</h3>
+              <p>
+                Drill deep into vehicle datasets using Tableau's built-in multi-dimensional interactive filters, 
+                dynamic tooltips, and real-time slice-and-dice queries.
+              </p>
+            </div>
+            <a href="#dashboard" class="feature-action-link" id="featureLink1">
+              <span>Launch Dashboard</span>
+              <i class="fa-solid fa-arrow-right"></i>
+            </a>
+          </div>
+
+          <!-- Feature 2 -->
+          <div class="feature-box">
+            <div class="feature-top">
+              <div class="feature-icon-header">
+                <div class="feature-icon">
+                  <i class="fa-solid fa-industry"></i>
+                </div>
+                <span class="feature-index">02 // BENCHMARK</span>
+              </div>
+              <h3>Manufacturer Insights</h3>
+              <p>
+                Compare leading automaker sales volumes, model portfolio diversification, market share evolution, 
+                and brand momentum across years.
+              </p>
+            </div>
+            <a href="#dashboard" class="feature-action-link" id="featureLink2">
+              <span>Compare Automakers</span>
+              <i class="fa-solid fa-arrow-right"></i>
+            </a>
+          </div>
+
+          <!-- Feature 3 -->
+          <div class="feature-box">
+            <div class="feature-top">
+              <div class="feature-icon-header">
+                <div class="feature-icon">
+                  <i class="fa-solid fa-star-half-stroke"></i>
+                </div>
+                <span class="feature-index">03 // SENTIMENT</span>
+              </div>
+              <h3>Customer Preferences</h3>
+              <p>
+                Analyze customer rating distributions across EV classifications including Sedans, SUVs, Crossovers, 
+                and High-Performance luxury EVs.
+              </p>
+            </div>
+            <a href="#dashboard" class="feature-action-link" id="featureLink3">
+              <span>Examine Ratings</span>
+              <i class="fa-solid fa-arrow-right"></i>
+            </a>
+          </div>
+
+          <!-- Feature 4 -->
+          <div class="feature-box">
+            <div class="feature-top">
+              <div class="feature-icon-header">
+                <div class="feature-icon">
+                  <i class="fa-solid fa-layer-group"></i>
+                </div>
+                <span class="feature-index">04 // DISCOVERY</span>
+              </div>
+              <h3>EV Market Story</h3>
+              <p>
+                Follow a curated storytelling progression revealing chronological milestones, market dynamics, 
+                and future projections in one cohesive narrative.
+              </p>
+            </div>
+            <a href="#story" class="feature-action-link" id="featureLink4">
+              <span>Read The Story</span>
+              <i class="fa-solid fa-arrow-right"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ====================================================================
+         5. Insights and Statistics Section
+         ==================================================================== -->
+    <section class="stats-section section-secondary" id="stats">
+      <div class="container">
+        <div class="stats-grid">
+          <!-- Stat 1: Total Models Scope -->
+          <div class="stat-card">
+            <div class="stat-top">
+              <i class="fa-solid fa-car-side stat-icon"></i>
+              <span class="stat-tag">Catalog Scope</span>
+            </div>
+            <div class="stat-value stat-counter" data-target="85" data-suffix="+">85+</div>
+            <div class="stat-label">EV Models Analyzed</div>
+            <div class="stat-note">Multi-segment electric vehicles documented in model dataset</div>
+          </div>
+
+          <!-- Stat 2: Manufacturers -->
+          <div class="stat-card">
+            <div class="stat-top">
+              <i class="fa-solid fa-building-columns stat-icon"></i>
+              <span class="stat-tag">Industry Scope</span>
+            </div>
+            <div class="stat-value stat-counter" data-target="24" data-suffix="+">24+</div>
+            <div class="stat-label">Global Automakers</div>
+            <div class="stat-note">Legacy OEMs and emerging pure-play EV manufacturers</div>
+          </div>
+
+          <!-- Stat 3: Sales Volume Tracking -->
+          <div class="stat-card">
+            <div class="stat-top">
+              <i class="fa-solid fa-gauge-high stat-icon"></i>
+              <span class="stat-tag">Market Volume</span>
+            </div>
+            <div class="stat-value stat-counter" data-target="3.8" data-suffix="M">3.8M</div>
+            <div class="stat-label">Annual Tracked Units</div>
+            <div class="stat-note">Aggregated sales records represented across historical cycles</div>
+          </div>
+
+          <!-- Stat 4: Rating Benchmark -->
+          <div class="stat-card">
+            <div class="stat-top">
+              <i class="fa-solid fa-star stat-icon"></i>
+              <span class="stat-tag">User Sentiment</span>
+            </div>
+            <div class="stat-value stat-counter" data-target="4.6" data-suffix=" / 5.0">4.6 / 5.0</div>
+            <div class="stat-label">Mean Consumer Rating</div>
+            <div class="stat-note">Overall driver satisfaction and vehicle quality benchmark</div>
+          </div>
+        </div>
+
+        <div class="stats-disclaimer">
+          <i class="fa-solid fa-circle-info"></i>
+          <span>
+            Metrics reflect high-level aggregated baselines from the published Tableau dataset. 
+            Use the interactive dashboard filters below to slice live figures dynamically.
+          </span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ====================================================================
+         6. Tableau Dashboard Integration Section
+         ==================================================================== -->
+    <section class="viz-section" id="dashboard">
+      <div class="container">
+        <div class="section-header">
+          <div class="section-tag">
+            <i class="fa-solid fa-chart-column"></i>
+            <span>Interactive Visual Intelligence</span>
+          </div>
+          <h2>Explore the EV Analytics Dashboard</h2>
+          <p>
+            Interact with real EV market data to explore manufacturer performance, sales trends, 
+            customer ratings, battery technology, and EV category distributions.
+          </p>
+        </div>
+
+        <!-- Dashboard Wrapper Card -->
+        <div class="viz-card-wrapper" id="dashboardCard">
+          <!-- Toolbar Header -->
+          <div class="viz-toolbar">
+            <div class="viz-title-group">
+              <span class="viz-live-dot" title="Live Interactive Connection"></span>
+              <span class="viz-toolbar-title">Tableau Public: EV Market Analytics Model</span>
+            </div>
+            <div class="viz-actions">
+              <button class="btn btn-secondary btn-sm" id="reloadDashboardBtn" title="Reset visualization view">
+                <i class="fa-solid fa-rotate-right"></i>
+                <span>Reload</span>
+              </button>
+              <a href="{{ dashboard_url }}" target="_blank" rel="noopener noreferrer" class="btn btn-outline-amber btn-sm" id="externalDashboardLink">
+                <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                <span>Open in Tableau Public</span>
+              </a>
+            </div>
+          </div>
+
+          <!-- Iframe Frame Container -->
+          <div class="viz-frame-container">
+            <!-- Loading Spinner Overlay -->
+            <div class="viz-loading-overlay" id="dashboardLoadingOverlay">
+              <div class="amber-spinner"></div>
+              <div class="viz-loading-text">
+                <i class="fa-solid fa-bolt-lightning text-highlight"></i>
+                <span>Initializing Tableau Public Engine...</span>
+              </div>
+            </div>
+
+            <!-- Embedded Tableau Public Dashboard -->
+            <iframe 
+              id="tableauDashboardIframe"
+              class="viz-iframe"
+              src="{{ dashboard_embed }}"
+              title="Tableau Public EV Analytics Dashboard"
+              loading="lazy"
+              allowfullscreen
+              scrolling="no">
+            </iframe>
+          </div>
+
+          <!-- Fallback Footer -->
+          <div class="viz-fallback-footer">
+            <span>
+              <i class="fa-solid fa-shield-halved"></i>
+              Full interactive filters, tooltips, and zoom controls are active within this container.
+            </span>
+            <a href="{{ dashboard_url }}" target="_blank" rel="noopener noreferrer">
+              <span>Direct Tableau Public Link</span>
+              <i class="fa-solid fa-chevron-right"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ====================================================================
+         7. Tableau Story Integration Section
+         ==================================================================== -->
+    <section class="viz-section section-secondary" id="story">
+      <div class="container">
+        <div class="section-header">
+          <div class="section-tag green">
+            <i class="fa-solid fa-route"></i>
+            <span>Sequential Discovery</span>
+          </div>
+          <h2>The EV Story — From Data to Discovery</h2>
+          <p>
+            Explore the story behind electric mobility through a sequence of visualizations highlighting 
+            EV market trends, manufacturer performance, consumer preferences, and the evolution 
+            of electric vehicle technology.
+          </p>
+        </div>
+
+        <!-- Story Wrapper Card -->
+        <div class="viz-card-wrapper" id="storyCard">
+          <!-- Toolbar Header -->
+          <div class="viz-toolbar">
+            <div class="viz-title-group">
+              <span class="viz-live-dot" style="background: var(--accent-amber); box-shadow: 0 0 10px var(--accent-amber);" title="Live Story Connection"></span>
+              <span class="viz-toolbar-title">Tableau Public: The EV Story Narrative</span>
+            </div>
+            <div class="viz-actions">
+              <button class="btn btn-secondary btn-sm" id="reloadStoryBtn" title="Reset story view">
+                <i class="fa-solid fa-rotate-right"></i>
+                <span>Reload</span>
+              </button>
+              <a href="{{ story_url }}" target="_blank" rel="noopener noreferrer" class="btn btn-outline-amber btn-sm" id="externalStoryLink">
+                <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                <span>Open in Tableau Public</span>
+              </a>
+            </div>
+          </div>
+
+          <!-- Iframe Frame Container -->
+          <div class="viz-frame-container">
+            <!-- Loading Spinner Overlay -->
+            <div class="viz-loading-overlay" id="storyLoadingOverlay">
+              <div class="amber-spinner"></div>
+              <div class="viz-loading-text">
+                <i class="fa-solid fa-book-open text-highlight"></i>
+                <span>Loading Interactive Story Chapters...</span>
+              </div>
+            </div>
+
+            <!-- Embedded Tableau Public Story -->
+            <iframe 
+              id="tableauStoryIframe"
+              class="viz-iframe"
+              src="{{ story_embed }}"
+              title="Tableau Public EV Market Story"
+              loading="lazy"
+              allowfullscreen
+              scrolling="no">
+            </iframe>
+          </div>
+
+          <!-- Fallback Footer -->
+          <div class="viz-fallback-footer">
+            <span>
+              <i class="fa-solid fa-sliders"></i>
+              Use the chapter navigator tabs at the top of the story to advance through the findings.
+            </span>
+            <a href="{{ story_url }}" target="_blank" rel="noopener noreferrer">
+              <span>Direct Tableau Story Link</span>
+              <i class="fa-solid fa-chevron-right"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ====================================================================
+         8. Project Information Section
+         ==================================================================== -->
+    <section class="section" id="project">
+      <div class="container">
+        <div class="project-info-grid">
+          <div class="project-card">
+            <div class="section-tag">
+              <i class="fa-solid fa-code"></i>
+              <span>Full-Stack Integration</span>
+            </div>
+            <h3>About This Project</h3>
+            <p>
+              <strong>EV Insights</strong> demonstrates the seamless integration of Tableau Public interactive 
+              dashboards and narrative stories into a Python Flask web application.
+            </p>
+            <p>
+              By combining Tableau's enterprise-grade visualization engine with a responsive, dark automotive UI 
+              built with clean HTML5, modern CSS3, and vanilla JavaScript, the platform delivers high-end market intelligence 
+              without third-party frontend framework overhead.
+            </p>
+
+            <div class="tech-stack-badges">
+              <span class="tech-badge"><i class="fa-brands fa-python"></i> Python 3</span>
+              <span class="tech-badge"><i class="fa-solid fa-flask"></i> Flask</span>
+              <span class="tech-badge"><i class="fa-solid fa-chart-simple"></i> Tableau Public</span>
+              <span class="tech-badge"><i class="fa-brands fa-html5"></i> HTML5 Semantic</span>
+              <span class="tech-badge"><i class="fa-brands fa-css3-alt"></i> Modern CSS3</span>
+              <span class="tech-badge"><i class="fa-brands fa-js"></i> Vanilla ES6 JS</span>
+              <span class="tech-badge"><i class="fa-solid fa-server"></i> Gunicorn</span>
+            </div>
+          </div>
+
+          <!-- Quick Access Links Card -->
+          <div class="project-links-card">
+            <h4>Direct Visualizations</h4>
+            <p>Access the source dashboards on Tableau Public server infrastructure.</p>
+
+            <div class="quick-links-list">
+              <a href="{{ dashboard_url }}" target="_blank" rel="noopener noreferrer" class="quick-link-item">
+                <span>View Dashboard on Tableau Public</span>
+                <i class="fa-solid fa-arrow-up-right-from-square"></i>
+              </a>
+
+              <a href="{{ story_url }}" target="_blank" rel="noopener noreferrer" class="quick-link-item">
+                <span>View Story on Tableau Public</span>
+                <i class="fa-solid fa-arrow-up-right-from-square"></i>
+              </a>
+
+              <a href="#dashboard" class="quick-link-item">
+                <span>Jump to Embedded Dashboard</span>
+                <i class="fa-solid fa-chevron-down"></i>
+              </a>
+
+              <a href="#story" class="quick-link-item">
+                <span>Jump to Embedded Story</span>
+                <i class="fa-solid fa-chevron-down"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ======================================================================
+       9. Site Footer
+       ====================================================================== -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <a href="#home" class="brand-logo" aria-label="EV Insights Home">
+            <div class="logo-icon-wrapper">
+              <i class="fa-solid fa-bolt-lightning"></i>
+            </div>
+            <span>EV <span class="accent">Insights</span></span>
+          </a>
+          <p>
+            Powering electric vehicle market intelligence through interactive data analytics, 
+            powertrain telemetry visualizations, and automotive industry storytelling.
+          </p>
+        </div>
+
+        <div class="footer-col">
+          <h4>Navigation</h4>
+          <ul class="footer-links">
+            <li><a href="#home">Home</a></li>
+            <li><a href="#about">About Insights</a></li>
+            <li><a href="#features">Key Features</a></li>
+            <li><a href="#stats">Market Metrics</a></li>
+            <li><a href="#project">About Project</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4>Visualizations</h4>
+          <ul class="footer-links">
+            <li><a href="#dashboard">EV Analytics Dashboard</a></li>
+            <li><a href="#story">The EV Story Narrative</a></li>
+            <li><a href="{{ dashboard_url }}" target="_blank" rel="noopener noreferrer">Tableau Dashboard (Public)</a></li>
+            <li><a href="{{ story_url }}" target="_blank" rel="noopener noreferrer">Tableau Story (Public)</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <div>
+          &copy; {{ current_year }} EV Insights. Designed &amp; Developed for Electric Mobility Market Analytics.
+        </div>
+        <div style="font-family: var(--font-mono); font-size: 0.8rem; color: var(--text-muted);">
+          Engine: Flask &bull; Visuals: Tableau Public
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Floating Back to Top Button -->
+  <button class="back-to-top" id="backToTopBtn" aria-label="Scroll back to top">
+    <i class="fa-solid fa-arrow-up"></i>
+  </button>
+
+  <!-- Master JavaScript Application Logic -->
+  <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>
