@@ -8,7 +8,7 @@ Author: Samiksha Mandwal
 """
 
 import os
-from datetime import datetime
+from datetime import datetime, timezone
 from flask import Flask, render_template, jsonify
 
 # Initialize Flask application
@@ -72,7 +72,7 @@ def health_check():
     return jsonify({
         "status": "healthy",
         "service": "EV Insights",
-        "timestamp": datetime.utcnow().isoformat()
+        "timestamp": datetime.now(timezone.utc).isoformat()
     }), 200
 
 
